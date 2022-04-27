@@ -145,10 +145,14 @@ export class NeptunSmart {
       const wirelessSensorsCount = await this.neptunSmartModbus.fetchWirelessSensorsCount();
       this.platform.log.debug('Updating with wirelessSensorsCount:', wirelessSensorsCount);
 
-      for (let i=0; i<wirelessSensorsCount.wirelessSensorsCount; ++i) {
-        this.wirelessSensorServices.push(this.accessory.getService(`Wireless sensor ${i+1}`) ||
-          this.accessory.addService(this.platform.Service.LeakSensor, `Wireless sensor ${i+1}`, `neptun-wireless-sensor-${i+1}`));
-        this.wiredSensorServices[i].setCharacteristic(this.platform.Characteristic.Name, `Wireless sensor ${i+1}`);
+      if (this.wirelessSensorServices.length !== wirelessSensorsCount.wirelessSensorsCount) {
+        this.wirelessSensorServices.map(service => this.accessory.removeService(service));
+        this.wirelessSensorServices.slice(0, this.wirelessSensorServices.length);
+        for (let i=0; i<wirelessSensorsCount.wirelessSensorsCount; ++i) {
+          this.wirelessSensorServices.push(this.accessory.getService(`Wireless sensor ${i + 1}`) ||
+            this.accessory.addService(this.platform.Service.LeakSensor, `Wireless sensor ${i + 1}`, `neptun-wireless-sensor-${i + 1}`));
+          this.wiredSensorServices[i].setCharacteristic(this.platform.Characteristic.Name, `Wireless sensor ${i + 1}`);
+        }
       }
 
       for (let i=0; i<wirelessSensorsCount.wirelessSensorsCount; ++i) {
@@ -191,6 +195,7 @@ export class NeptunSmart {
     if (!this.isGroupsEnabled) {
       this.currentConfig.valveOpenSecondGroup = !!value;
     }
+    this.platform.log.info('Switching valves first group to', value ? 'ACTIVE' : 'INACTIVE');
     await this.handleConfigWrite(this.neptunSmartModbus.writeConfigRegister, this.currentConfig, 'Valve group 1 active', () => {
       this.platform.log.debug('Status for valve group 1 set to', this.currentConfig.valveOpenFirstGroup);
     });
@@ -201,6 +206,7 @@ export class NeptunSmart {
       this.currentConfig.valveOpenFirstGroup = !!value;
     }
     this.currentConfig.valveOpenSecondGroup = !!value;
+    this.platform.log.info('Switching valves second group to', value ? 'ACTIVE' : 'INACTIVE');
     await this.handleConfigWrite(this.neptunSmartModbus.writeConfigRegister, this.currentConfig, 'Valve group 2 active', () => {
       this.platform.log.debug('Status for valve group 2 set to', this.currentConfig.valveOpenSecondGroup);
     });
