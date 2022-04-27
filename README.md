@@ -16,7 +16,7 @@ No online API. Control your sensors and valves via local network using ModBus RT
 
 Using a terminal, navigate to the project folder and run this command to install the development dependencies:
 
-```
+```json
 {
   "platforms": [
     {
