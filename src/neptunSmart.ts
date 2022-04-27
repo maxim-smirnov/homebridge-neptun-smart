@@ -102,9 +102,9 @@ export class NeptunSmart {
 
       const c = platform.Characteristic;
 
-      this.faucetServices[0].updateCharacteristic(c.Active, config.valveOpenFirstGroup);
+      this.faucetServices[0].updateCharacteristic(c.Active, config.valveOpenFirstGroup ? c.Active.ACTIVE : c.Active.INACTIVE);
       if (this.isGroupsEnabled) {
-        this.faucetServices[1].updateCharacteristic(c.Active, config.valveOpenFirstGroup);
+        this.faucetServices[1].updateCharacteristic(c.Active, config.valveOpenSecondGroup ? c.Active.ACTIVE : c.Active.INACTIVE);
       }
 
       const wiredSensorsStatus = await this.neptunSmartModbus.fetchWiredSensorsStatus();
