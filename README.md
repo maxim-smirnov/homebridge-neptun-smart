@@ -22,7 +22,7 @@ No online API. Control your sensors and valves via local network using ModBus RT
 
 ## Example Config
 
-Using a terminal, navigate to the project folder and run this command to install the development dependencies:
+If you are not using [Homebridge Config UI X](https://github.com/oznu/homebridge-config-ui-x) feel free to use this example config.
 
 ```json
 {
