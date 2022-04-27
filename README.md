@@ -11,6 +11,14 @@
 This plugin provides an integration with Neptun Smart leak prevention system.
 No online API. Control your sensors and valves via local network using ModBus RTU.
 
+## Instructions
+
+1. Connect your Neptun Smart appliance to Wi-Fi network.
+2. Discover device IP address and make static DHCP lease settings.
+3. Install plugin and configure it using [Homebridge Config UI X](https://github.com/oznu/homebridge-config-ui-x). 
+4. Minimum required settings are: `id`, `displayName`, `host`, `groupsEnabled`, `wiredSensorsCount`.
+
+### Wireless sensors will be discovered automatically.
 
 ## Example Config
 
