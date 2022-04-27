@@ -151,7 +151,7 @@ export class NeptunSmart {
         for (let i=0; i<wirelessSensorsCount.wirelessSensorsCount; ++i) {
           this.wirelessSensorServices.push(this.accessory.getService(`Wireless sensor ${i + 1}`) ||
             this.accessory.addService(this.platform.Service.LeakSensor, `Wireless sensor ${i + 1}`, `neptun-wireless-sensor-${i + 1}`));
-          this.wiredSensorServices[i].setCharacteristic(this.platform.Characteristic.Name, `Wireless sensor ${i + 1}`);
+          this.wirelessSensorServices[i].setCharacteristic(this.platform.Characteristic.Name, `Wireless sensor ${i + 1}`);
         }
       }
 
