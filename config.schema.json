@@ -1,0 +1,74 @@
+{
+  "pluginAlias": "NeptunSmart",
+  "pluginType": "platform",
+  "footerDisplay": "This plugin uses direct connection to Neptun Smart via ModBus proto.",
+  "singular": true,
+  "schema": {
+    "type": "object",
+    "properties": {
+      "devices": {
+        "title": "Neptun Smart devices",
+        "type": "array",
+        "items": {
+          "type": "object",
+          "title": "Neptun Smart Device",
+          "properties": {
+            "id": {
+              "title": "ID",
+              "type": "string",
+              "required": true,
+              "placeholder": "neptun-1",
+              "description": "Unique device identifier"
+            },
+            "displayName": {
+              "title": "Name",
+              "type": "string",
+              "required": true,
+              "default": "Neptun Smart"
+            },
+            "host": {
+              "title": "IP Address / Hostname",
+              "type": "string",
+              "required": true,
+              "format": "hostname"
+            },
+            "port": {
+              "title": "Port",
+              "type": "number",
+              "required": false,
+              "default": "503"
+            },
+            "address": {
+              "title": "Address",
+              "type": "number",
+              "required": false,
+              "default": "240",
+              "description": "Device ModBus address"
+            },
+            "wiredSensorsCount": {
+              "title": "Wired sensors count",
+              "type": "integer",
+              "placeholder": 4,
+              "minimum": 0,
+              "required": true,
+              "description": "Number of wired sensors connected"
+            },
+            "groupsEnabled": {
+              "title": "Groups enabled",
+              "type": "boolean",
+              "default": "false",
+              "required": true
+            },
+            "updateInterval": {
+              "title": "Update interval",
+              "type": "number",
+              "required": false,
+              "default": "10",
+              "description": "Update interval in seconds (may require adjust)"
+            }
+          }
+        }
+      }
+    }
+  }
+}
