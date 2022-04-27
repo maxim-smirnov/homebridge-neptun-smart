@@ -188,7 +188,7 @@ export class NeptunSmart {
 
   async handleFaucetFirstGroupActiveSet(value) {
     this.currentConfig.valveOpenFirstGroup = !!value;
-    if (this.isGroupsEnabled) {
+    if (!this.isGroupsEnabled) {
       this.currentConfig.valveOpenSecondGroup = !!value;
     }
     await this.handleConfigWrite(this.neptunSmartModbus.writeConfigRegister, this.currentConfig, 'Valve group 1 active', () => {
@@ -197,7 +197,7 @@ export class NeptunSmart {
   }
 
   async handleFaucetSecondGroupActiveSet(value) {
-    if (this.isGroupsEnabled) {
+    if (!this.isGroupsEnabled) {
       this.currentConfig.valveOpenFirstGroup = !!value;
     }
     this.currentConfig.valveOpenSecondGroup = !!value;
