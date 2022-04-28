@@ -57,7 +57,8 @@ export class NeptunSmart {
     this.valvesServices.push(this.accessory.getService('Valves group 1') ||
         this.accessory.addService(this.platform.Service.Valve, 'Valves group 1', 'neptun-valves-group-1'));
     this.valvesServices[0].setCharacteristic(this.platform.Characteristic.Name, 'Valves group 1');
-    this.valvesServices[0].setCharacteristic(this.platform.Characteristic.ValveType, this.platform.Characteristic.ValveType.GENERIC_VALVE);
+    this.valvesServices[0].setCharacteristic(
+      this.platform.Characteristic.ValveType, this.platform.Characteristic.ValveType.GENERIC_VALVE);
     this.valvesServices[0].setCharacteristic(this.platform.Characteristic.InUse, this.platform.Characteristic.InUse.IN_USE);
     this.valvesServices[0].getCharacteristic(this.platform.Characteristic.Active)
       .onSet(this.handleFaucetFirstGroupActiveSet.bind(this));
@@ -65,7 +66,8 @@ export class NeptunSmart {
       this.valvesServices.push(this.accessory.getService('Valves group 2') ||
           this.accessory.addService(this.platform.Service.Valve, 'Valves group 2', 'neptun-valves-group-1'));
       this.valvesServices[1].setCharacteristic(this.platform.Characteristic.Name, 'Valves group 2');
-      this.valvesServices[1].setCharacteristic(this.platform.Characteristic.ValveType, this.platform.Characteristic.ValveType.GENERIC_VALVE);
+      this.valvesServices[1].setCharacteristic(
+        this.platform.Characteristic.ValveType, this.platform.Characteristic.ValveType.GENERIC_VALVE);
       this.valvesServices[1].setCharacteristic(this.platform.Characteristic.InUse, this.platform.Characteristic.InUse.IN_USE);
       this.valvesServices[1].getCharacteristic(this.platform.Characteristic.Active)
         .onSet(this.handleFaucetSecondGroupActiveSet.bind(this));
