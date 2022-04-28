@@ -10,7 +10,7 @@ import {Config} from './neptunSmartData';
  * Each accessory may expose multiple services of different service types.
  */
 export class NeptunSmart {
-  private faucetServices;
+  private valvesServices;
   private wiredSensorServices;
   private wirelessSensorServices;
   readonly id;
@@ -40,7 +40,7 @@ export class NeptunSmart {
     this.updateInterval = config.updateInterval ?? 60;
     this.isGroupsEnabled = config.groupsEnabled ?? false;
 
-    this.faucetServices = [];
+    this.valvesServices = [];
     this.wiredSensorServices = [];
     this.wirelessSensorServices = [];
 
@@ -54,16 +54,20 @@ export class NeptunSmart {
       .setCharacteristic(this.platform.Characteristic.Manufacturer, 'Neptun')
       .setCharacteristic(this.platform.Characteristic.Model, 'Neptun Smart');
 
-    this.faucetServices.push(this.accessory.getService('Valves group 1') ||
-        this.accessory.addService(this.platform.Service.Faucet, 'Valves group 1', 'neptun-valves-group-1'));
-    this.faucetServices[0].setCharacteristic(this.platform.Characteristic.Name, 'Valves group 1');
-    this.faucetServices[0].getCharacteristic(this.platform.Characteristic.Active)
+    this.valvesServices.push(this.accessory.getService('Valves group 1') ||
+        this.accessory.addService(this.platform.Service.Valve, 'Valves group 1', 'neptun-valves-group-1'));
+    this.valvesServices[0].setCharacteristic(this.platform.Characteristic.Name, 'Valves group 1');
+    this.valvesServices[0].setCharacteristic(this.platform.Characteristic.ValveType, this.platform.Characteristic.ValveType.GENERIC_VALVE);
+    this.valvesServices[0].setCharacteristic(this.platform.Characteristic.InUse, this.platform.Characteristic.InUse.IN_USE);
+    this.valvesServices[0].getCharacteristic(this.platform.Characteristic.Active)
       .onSet(this.handleFaucetFirstGroupActiveSet.bind(this));
     if (this.isGroupsEnabled) {
-      this.faucetServices.push(this.accessory.getService('Valves group 2') ||
-          this.accessory.addService(this.platform.Service.Faucet, 'Valves group 2', 'neptun-valves-group-1'));
-      this.faucetServices[1].setCharacteristic(this.platform.Characteristic.Name, 'Valves group 2');
-      this.faucetServices[1].getCharacteristic(this.platform.Characteristic.Active)
+      this.valvesServices.push(this.accessory.getService('Valves group 2') ||
+          this.accessory.addService(this.platform.Service.Valve, 'Valves group 2', 'neptun-valves-group-1'));
+      this.valvesServices[1].setCharacteristic(this.platform.Characteristic.Name, 'Valves group 2');
+      this.valvesServices[1].setCharacteristic(this.platform.Characteristic.ValveType, this.platform.Characteristic.ValveType.GENERIC_VALVE);
+      this.valvesServices[1].setCharacteristic(this.platform.Characteristic.InUse, this.platform.Characteristic.InUse.IN_USE);
+      this.valvesServices[1].getCharacteristic(this.platform.Characteristic.Active)
         .onSet(this.handleFaucetSecondGroupActiveSet.bind(this));
     }
 
@@ -102,9 +106,9 @@ export class NeptunSmart {
 
       const c = platform.Characteristic;
 
-      this.faucetServices[0].updateCharacteristic(c.Active, config.valveOpenFirstGroup ? c.Active.ACTIVE : c.Active.INACTIVE);
+      this.valvesServices[0].updateCharacteristic(c.Active, config.valveOpenFirstGroup ? c.Active.ACTIVE : c.Active.INACTIVE);
       if (this.isGroupsEnabled) {
-        this.faucetServices[1].updateCharacteristic(c.Active, config.valveOpenSecondGroup ? c.Active.ACTIVE : c.Active.INACTIVE);
+        this.valvesServices[1].updateCharacteristic(c.Active, config.valveOpenSecondGroup ? c.Active.ACTIVE : c.Active.INACTIVE);
       }
 
       const wiredSensorsStatus = await this.neptunSmartModbus.fetchWiredSensorsStatus();
