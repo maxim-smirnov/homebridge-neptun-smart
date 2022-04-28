@@ -62,8 +62,8 @@ export class NeptunSmart {
     if (this.isGroupsEnabled) {
       this.faucetServices.push(this.accessory.getService('Valves group 2') ||
           this.accessory.addService(this.platform.Service.Faucet, 'Valves group 2', 'neptun-valves-group-1'));
-      this.faucetServices[0].setCharacteristic(this.platform.Characteristic.Name, 'Valves group 2');
-      this.faucetServices[0].getCharacteristic(this.platform.Characteristic.Active)
+      this.faucetServices[1].setCharacteristic(this.platform.Characteristic.Name, 'Valves group 2');
+      this.faucetServices[1].getCharacteristic(this.platform.Characteristic.Active)
         .onSet(this.handleFaucetSecondGroupActiveSet.bind(this));
     }
 
