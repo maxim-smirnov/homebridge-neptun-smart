@@ -7,7 +7,7 @@
 </p>
 
 
-# Homebridge Nuptun Smart
+# Homebridge Neptun Smart
 
 This plugin provides an integration with Neptun Smart leak prevention system.
 No online API. Control your sensors and valves via local network using ModBus RTU.
